@@ -356,10 +356,10 @@ def insert(request):
                                         user1_id=iduser,
                                         pub_date=timenow,
                                         hist_img_path=request.FILES['image'] ,
-                                        scoreisease=score_A,
+                                        scorDeisease=score_A,
                                         leafType=leaf,
                                         statusLeaf=status,
-                                        diseaseOc=disease,
+                                        diseaseOc=disease,  
                                     )
                             insert.save()
                             messages.success(request, 'ตรวจสอบเสร็จสิ้น !')
@@ -381,7 +381,7 @@ def insert(request):
                                     user1_id=iduser,
                                     pub_date=timenow,
                                     hist_img_path=request.FILES['image'] ,
-                                    scoreisease=score_l,
+                                    scorDeisease=score_l,
                                     leafType=leaf,
                                     statusLeaf=status,
                                     diseaseOc=disease,
@@ -406,7 +406,7 @@ def insert(request):
                     #                 user1_id=iduser,
                     #                 pub_date=timenow,
                     #                 hist_img_path=request.FILES['image'] ,
-                    #                 scoreisease=score_l,
+                    #                 scorDeisease=score_l,
                     #                 leafType=leaf,
                     #                 statusLeaf=status,
                     #                 diseaseOc=disease,
@@ -418,9 +418,9 @@ def insert(request):
                     #ไม่บันทึกลงประวัติ
                 else:
                                       #โมเดลใบกล้วยไม้หรือใบอื่นๆ
-                    filepath='blogs/model_l7.h5'
-                    filepath_model = 'blogs/model_l7.json'
-                    filepath_weights = 'blogs/weights_model_l7.h5'
+                    filepath='blogs/model_l3.h5'
+                    filepath_model = 'blogs/model_l3.json'
+                    filepath_weights = 'blogs/weights_model_l3.h5'
                     predict_model = load_model(filepath) 
                     with open(filepath_model, 'r') as f:
                         loaded_model_json = f.read()
@@ -438,9 +438,9 @@ def insert(request):
 
                     if scoreL[0]==np.max(scoreL) :
                                           #โมเดลใบปกติหรือติดโรค
-                        filepathabn='blogs/model_abn4.h5'
-                        filepath_model_abn = 'blogs/model_abn4.json'
-                        filepath_weights_abn = 'blogs/weights_model_abn4.h5'
+                        filepathabn='blogs/model_abn3.h5'
+                        filepath_model_abn = 'blogs/model_abn3.json'
+                        filepath_weights_abn = 'blogs/weights_model_abn3.h5'
                         predict_model_abn = load_model(filepathabn) 
 
                         with open(filepath_model_abn, 'r') as f:

@@ -31,7 +31,7 @@ importlib-metadata==5.0.0
 imutils==0.5.4
 ipython==8.5.0
 jedi==0.18.1
-keras==2.10.0
+keras==2.8.0
 Keras-Preprocessing==1.1.2
 kiwisolver==1.4.4
 libclang==14.0.6
@@ -64,11 +64,11 @@ rsa==4.9
 six==1.16.0
 sqlparse==0.4.2
 stack-data==0.5.1
-tensorboard==2.10.1
+tensorboard==2.8.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
-tensorflow==2.10.0
-tensorflow-estimator==2.10.0
+tensorflow==2.8.4
+tensorflow-estimator==2.8.0
 tensorflow-intel==2.11.0
 tensorflow-io-gcs-filesystem==0.27.0
 termcolor==2.0.1
