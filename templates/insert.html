@@ -1,0 +1,179 @@
+{% extends 'layout.html'%}
+
+{% block content%}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div class="container" style="margin-top: 5%; padding-bottom: 5%;">
+    <link rel="stylesheet" href="/static/css/insert.css">
+    <div class="card shadow">
+        <div class="row justify-content-md-center mt-2 mb-4">
+
+            <div class="col offset-md-1 align-items-center justify-content-center ">
+                <form action="insert" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <p class="p1"></p>
+                    <img src="/static/img/ตัวอย่าง.png" alt="" id="target" class="imgs p-1 "><br>
+
+            </div>
+            <div class="col offset-md-1 align-items-center justify-content-center mt-2 ">
+                <div class="col mb-3 ">
+                    <div class="bread-crump mb-4 text-decoration-none">
+                        <a href="/">หน้าหลัก</a> >
+                        <a href="#">วิเคราะห์โรค</a>
+
+                    </div>
+                    <input class="form-control" type="file" id="src" accept="image/x-png,image/gif,image/jpeg"
+                        name="image" required>
+
+
+                    <div class="form-check mt-2">
+                        <input type="checkbox" name="checks" class="form-check-input" id="checks" value="1">
+                        <p>ต้องการบันทึกประวัติ</p>
+
+                    </div>
+                    <span class="mb-2">**หมายเหตุ**<p>
+                            เพื่อความแม่นยำกรุณาใช้พื้นหลังสีขวาและถ่ายเฉพาะใบที่ต้องการตรวจสอบโรค</p></span>
+                </div>
+                <div class="col">
+
+                    <button id="btn2-in" type="submit" class="button" onclick="this.classList.toggle('button--loading')"
+                        data-bs-toggle="modal" data-bs-target="#messageAlert"><span
+                            class="button__text">ประมวลผล</span></button>
+                    <button id="btn3-ca" type="reset" class="">ล้าง</button>
+
+                </form>
+                    {% for message in messages %}
+                    {% if message.tags == 'success' %}
+
+                    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+                        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+                        crossorigin="anonymous"></script>
+                    <script>
+                        $(document).ready(function () {
+                            $("#messageAlert").modal('show');
+
+                        });
+
+                    </script>
+
+                    {% endif %}
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4 shadow">
+        <div class="row p-3">
+            <div class="text-right">
+                <button id="" type="button" class="btn btn-primary" onclick="buttonhis()">ประวัติ</button>
+            </div>
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>รูปภาพ</th>
+                        <th>ผลลัพท์</th>
+                        <th>ความถูกต้อง</th>
+                        <th>วันที่</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+
+                        {% if img %}
+                        <td>
+
+                            <img src="{{ img }}" alt="" class="img">
+
+                        </td>
+                        {% if disease %}
+                        <td>{{ disease }}</td>
+                        <td>มีความเป็นไปได้ {{ score }} % <br> ที่จะเป็นโรคนี้ <a href="#" hidden>เพิ่มเติม</a></td>
+                        <td>{{ times }}</td>
+                        {% elif status %}
+                        <td>{{ status }}</td>
+                        <td>มีความเป็นไปได้ {{ score }} %</td>
+                        <td>{{ times }}</td>
+                        {% else %}
+                        <td>{{ leaf }}</td>
+                        <td>มีความเป็นไปได้ {{ score }} %</td>
+                        <td>{{ times }}</td>
+                        {% endif %}
+                        {% endif %}
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="messageAlert" tabindex="-1" aria-labelledby="messageAlertLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="messageAlertLabel"><i class="bi bi-flower2"></i>&nbsp; ผลการตรวจสอบ
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center text-success mt-3">
+                    <i class="far fa-check-circle fa-6x" style="color: #a5dc86;"></i><br>
+                    อัพโหลดสำเร็จ
+                </div>
+                <br>
+                <div class="mb-3">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"
+                    style="width:65;">ยืนยัน</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+<script>
+    function showImage(src, target) {
+        var fr = new FileReader();
+        // when image is loaded, set the src of the image where you want to display it
+        fr.onload = function (e) { target.src = this.result; };
+        src.addEventListener("change", function () {
+            // fill fr with image data
+            fr.readAsDataURL(src.files[0]);
+        });
+    }
+
+    var src = document.getElementById("src");
+    var target = document.getElementById("target");
+    showImage(src, target);
+</script>
+<script>
+    const btn = document.querySelector(".button");
+
+    btn.classList.add("button--loading");
+    btn.classList.remove("button--loading");
+
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,247 @@
+{% extends 'layout.html'%}
+
+{% block content%}
+
+
+
+<div class="container " style="margin-top:3% ;margin-bottom: 10%;">
+  <div class="d-flex justify-content-between mb-3">
+    <button onclick="buttonBackHistorys()" id="btn-back" class="btn btn-warning border "><svg
+        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+      </svg>ย้อนกลับ</button>
+    <div class="bread-crump mb-4 text-decoration-none">
+      <a href="/">หน้าหลัก</a> >
+      <a href="{% url 'history' %}">ประวัติการตรวจสอบ</a> >
+      <a href="#">สรุปผลการตรวจสอบ</a>
+    </div>
+  </div>
+
+    
+  <div class="row d-flex justify-content-between  p-5" >
+    <div class="col-sm-3 p-2" >
+      <div class="card shadow">
+        <div class="card-body">
+          <center><h5 class="col card-title">ภาพทั้งหมด</h5>
+          <p class="card-text"><span class="col align-self-start">จำนวน</span><span
+              class="col align-self-center">{{total}}</span> <span class="col align-self-end">รูป</span></p></center>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3 p-2" >
+      <div class="card shadow">
+        <div class="card-body">
+          <center><h5 class="col card-title">โรคเน่าดำ</h5>
+
+          <p class="card-text"><span class="col align-self-start">ทั้งหมด</span><span
+              class="col align-self-center">{{black_rot}}</span><span class="col align-self-end">รูป</span> </p></center>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3 p-2">
+      <div class="card shadow">
+        <div class="card-body">
+          <center> <h5 class="col card-title">โรคเน่า</h5>
+          <p class="card-text"><span class="col align-self-start">ทั้งหมด</span> <span
+              class="col align-self-center">{{rot}}</span> <span class="col align-self-end">รูป</span></p></center>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3 p-2" >
+      <div class="card shadow">
+        <div class="card-body">
+          <center><h5 class="col card-title">โรคใบปื้นเหลือง</h5>
+          <p class="card-text"><span class="col align-self-start">ทั้งหมด</span> <span
+              class="col align-self-center">{{yellow_leaf}}</span> <span class="col align-self-end">รูป</span></p></center>
+
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <div id="content-wrapper " class="">
+
+    <form action="" class="text-center">
+      {% csrf_token %}
+      <label for="">ปี</label>
+      <!--<input type="date" name="" id="datepicker">-->
+      <input type="number" min="2022" max="{{currentYear}}" step="1" value='{{nowY}}' name="timeS" />
+      <!--
+  <label for="">จากวันที่</label>
+  <input type="date" name="" max="" id="fromDate">
+  <label for="">ถึงวันที่</label>
+  <input type="date" name="" min="" id="toDate>-->
+      <button type="submit" class="btn btn-primary">ยืนยัน</button>
+    </form>
+    <!-- Icon Cards-->
+    <div class="col-md-11 mt-2 " style="margin-bottom: 10%;margin-left: 4%; ">
+      <canvas id="myChart" class="border" style="padding-right: 3%;padding-left: 2%;"></canvas>
+      <div>
+
+
+        <script>
+          // setup 
+          const data = {
+            labels: [{% for course in month_list %} '{{ course }}', {% endfor %}],
+          datasets: [{
+            label: 'โรคเน่า',
+            data: [{% for number in number_rot %} '{{ number }}', {% endfor %},],
+            backgroundColor: [
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+              'rgba(255, 26, 104, 0.2)',
+
+              'rgba(0, 0, 0, 0.2)'
+            ],
+              borderColor: [
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+
+
+                'rgba(0, 0, 0, 1)'
+              ],
+                borderWidth: 1
+                      }, {
+            label: 'โรคเน่าดำ',
+              data: [{% for number in number_black_rot %} '{{ number }}', {% endfor %},],
+          backgroundColor: [
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(0, 0, 0, 0.2)'
+          ],
+            borderColor: [
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(0, 0, 0, 1)'
+            ],
+              borderWidth: 1
+                      }, {
+            label: 'โรคใบปื้นเหลือง',
+              data: [{% for number in number_yellow_leaf %} '{{ number }}', {% endfor %},],
+          backgroundColor: [
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(0, 0, 0, 0.2)'
+          ],
+            borderColor: [
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(0, 0, 0, 1)'
+            ],
+              borderWidth: 1
+                      }]
+                    };
+
+          // config 
+          const config = {
+            type: 'bar',
+            data,
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          };
+
+          // render init block
+          const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+          );
+        </script>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+  integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+  var fromDate;
+  $('#fromDate').on('change', function () {
+    fromDate = $(this).val();
+    $('#toDate').prop('min', function () {
+      return fromDate;
+    })
+  });
+  var toDate;
+  $('#toDate').on('change', function () {
+    toDate = $(this).val();
+    $('#fromDate').prop('max', function () {
+      return toDate;
+    })
+  });
+
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'layout.html'%}
+
+{% block content%}
+<link rel="stylesheet" href="/static/css/orchdis.css">
+
+<div class="new-background">
+  <div id="banner" style="background-image: url(https://img.salehere.co.th/p/1200x0/2021/07/09/xguuihrvxlvz.jpg);
+ 
+  background-repeat: repeat;
+  background-size: cover;
+  
+  ">
+    <div class="container">
+      <div class="topic">
+        <!--<h1>&lt;GTCoding/&gt;</h1>-->
+        <h1 style="color:white;"><b>ข้อมูลเกี่ยวกับโรคกล้วยไม้</b></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" style="margin-top: 2%;padding-bottom: 5%;">
+  <div class="d-flex justify-content-between mb-3">
+    <button onclick="buttonback()" id="btn-back" class="btn btn-warning border "><svg xmlns="http://www.w3.org/2000/svg"
+        width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+      </svg>ย้อนกลับ</button>
+    <div class="bread-crump mb-4 text-decoration-none">
+      <a href="/">หน้าหลัก</a> >
+      <a href="#">ข้อมูลเกี่ยวกับโรคกล้วยไม้</a>
+    </div>
+  </div>
+  {% if request.user.is_staff %}
+  <div class="text-right">
+    <a href="/update_orchdis" id="" type="button" class="btn btn-primary mb-2">เพิ่มโรคกล้วยไม้</a>
+</div>
+{% endif %}
+  <div class="row">
+    {% for orchdis in listorchdis %}
+    
+  
+    <div class="col-12">
+      <div class="list-group-item list-group-item-action" role="toolbar" aria-label="Toolbar with button groups">
+        <a class="btn btn-moreinfo text-left" data-bs-toggle="collapse" href="#collapseExample-{{orchdis.disease_id}}"
+          aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">
+          &nbsp;{{orchdis.disease_name}}
+        </a>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="collapse mt-3 mb-3 shadow" id="collapseExample-{{orchdis.disease_id}}">
+        <div class="card card-body ">
+
+          <div class="content">
+            <img src="{{orchdis.disease_image.url}}" alt=""
+              style="display:block;text-align:center;margin-right:auto;margin-left:auto; margin-top: 2em; width: 300px; height: 200px;">
+            <p style=" display: inline;margin-top: 2em; position: absolute;">
+            <h4>ลักษณะอาการ</h4><span>{{orchdis.disease_look}}</span>
+            <h4>การแพร่ระบาด </h4><span>{{orchdis.disease_epidemic}}</span>
+            <h4>การป้องกันกำจัด</h4><span>{{orchdis.disease_prevent}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    {% endfor %}
+   
+  </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

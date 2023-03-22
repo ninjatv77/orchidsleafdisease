@@ -1,0 +1,76 @@
+
+
+button#btn-con{
+  float: right;
+}
+#user{
+      margin: 3px;
+      background-color:#f8b26c ;
+      
+}
+#pass{
+      margin: 3px;
+      background-color:#f8b26c  ;
+}
+#btn-login{
+  background-color: rgb(255, 226, 129);
+  color: rgb(28, 139, 0);
+  border: 2px solid rgb(51, 255, 0);
+}
+
+
+.history-img {
+  width: 100px;
+  height: 100px;
+}
+.bread-crump a{
+  text-decoration: none;
+  color: black;
+}
+
+#banner {
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /*background-size: cover;
+  background-attachment: fixed;*/
+  background-position: center;
+  background-blend-mode: overlay;
+  
+} 
+.topic {margin-top: 20vh;}
+  .topic h1 {font-size: 4em; color:white;}
+  .topic h5 {color: #ffffff;}
+  .topic p {width: 25em;}
+
+/*#bg-spinner{
+  top: 0;
+  z-index: 100;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  display: none;
+  background-color: rgba(1,1,1,0.7);
+}
+#posistion-spinner{
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+
+}
+#spinner{
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  border: 6px solid #d3d3d3;
+  border-top: 6px solid #007bff;
+  animation: loading 1s infinite linear;
+
+}
+@keyframes loading{
+  to {
+    transform: rotate(360deg);
+  }
+}*/

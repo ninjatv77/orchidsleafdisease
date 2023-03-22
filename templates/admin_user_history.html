@@ -1,0 +1,101 @@
+{% extends 'layout.html'%}
+
+{% block content%}
+<link rel="stylesheet" href="/static/css/insert.css">
+<div class="container" style="margin-top: 3%;">
+  <div class="d-flex justify-content-between mb-3">
+    <button onclick="buttonBackUserDetail()" id="btn-back" class="btn btn-warning border "><svg
+        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+      </svg>ย้อนกลับ</button>
+    <div class="bread-crump mb-4 text-decoration-none">
+      <a href="/">หน้าหลัก</a> >
+      <a href="/admin_user_details">ข้อมูลผู้ใช้งานระบบ</a> > 
+      <a href="#">ประวัติผู้ใช้งาน</a>
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 10%;">
+    <h2 align="center">ข้อมูลผู้ใช้งานระบบ</h2>
+    <div class="col ">
+      <div class="d-flex justify-content-between">
+        <div>
+          <form action="">
+            <!--<div class="mt-3"><input type="date" name="dates" id="" style="width: 180px;"></div><br>-->
+        </div>
+        <div>
+          <button onclick="" id="btn-con" class="btn btn-secondary float-right mb-3" hidden>####</button>
+        </div>
+
+      </div>
+
+
+      <!-- <nav aria-label="Page navigation example" class="mt-3">
+        <ul class="pagination">
+          {% if images.has_previous %}
+          <li class="page-item"><a class="page-link" href="/admin_user_history/{{pk}}/?page=1">First</a></li>
+          <li class="page-item"><a class="page-link"
+              href="/admin_user_history/{{pk}}/?page={{images.previous_page_number}}">Previous</a></li>
+          {% endif %}
+          {% for num in images.paginator.page_range %}
+          {% if images.number == num %}
+          <li class="page-item"><a class="page-link" href="/admin_user_history/{{pk}}?page={{num}}">{{ num }}</a></li>
+          {% elif num > images.number|add:'-3' and num < images.number|add:'3' %} <li class="page-item"><a
+              class="page-link" href="/admin_user_history/{{pk}}/?page={{num}}">{{ num }}</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if images.has_next %}
+            <li class="page-item"><a class="page-link"
+                href="/admin_user_history/{{pk}}/?page={{images.next_page_number}}">Next</a></li>
+            <li class="page-item"><a class="page-link"
+                href="/admin_user_history/{{pk}}/?page={{images.paginator.num_pages}}">Last</a></li>
+            {% endif %}
+        </ul>
+      </nav> -->
+    </div>
+
+
+    </form>
+    <table id="example" class="display table shadow ">
+      <thead>
+        <tr>
+
+          <th>รูปภาพ</th>
+          <th>ผลลัพท์</th>
+          <th>รายละเอียด</th>
+          <th>วันที่</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for p in images %}
+        <tr>
+          <!--{% if his.user1_id == userID %} -->
+          {% if p.hist_img_path %}
+          <td><img src="{{p.hist_img_path.url}}" alt="" class="img"></td>
+          {% endif %}
+          <td>{{p.diseaseOc}}{{p.leafType}}{{p.statusLeaf}}</td>
+
+          <td>มีความเป็นไปได้&nbsp;{{p.scoreDisease}}%</td>
+          <td>{{p.pub_date}}</td>
+        </tr>
+
+
+
+        </tr>
+        <!--{% endif %} -->
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,250 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link rel="stylesheet" href="/static/css/stylesheet.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js">
+    <script src="{% static 'vendor/chart.js/Chart.js' %}"></script>
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+    <title>Orchid Leaf Disease Classification</title>
+    <style>
+        body {
+
+            background-size: 100%;
+            background-repeat: no-repeat;
+
+        }
+
+        * {
+            font-family: 'Prompt', sans-serif;
+        }
+    </style>
+    <script type="text/javascript">
+        function buttonback() {
+            window.location = "/insertForm";
+        }
+        function buttonhis() {
+            window.location = "/history";
+        }
+        function buttonlogin() {
+            window.location = "/login";
+        }
+        function buttonBackUpdate() {
+            window.location = "/update_orchdis";
+        }
+        function buttonBackOrchdis() {
+            window.location = "/orchdis";
+
+
+        }
+        function buttonBackUserDetail() {
+            window.location = "/admin_user_details";
+        }
+        function buttonBackHistorys() {
+            window.location = "/history";
+        }
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #FFF8DB;">
+        <div class="container">
+            <a class="navbar-brand" href="/"><img src="/static/img/ochid.png" alt="" id="icon" style="width: 40px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'insertForm' %}">หน้าหลัก</a>
+                    </li>
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            ข้อมูลกล้วยไม้
+                        </a>
+                        <ul class="dropdown-menu mt-2" aria-labelledby="navbarDropdown">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/orch">ข้อมูลเกี่ยวกับกล้วยไม้</a>
+                            </li> <hr>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page"
+                                    href="/orchdis">โรคกล้วยไม้</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <hr>
+           
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        ประวัติการใช้งาน
+                    </a>
+                        <ul class="dropdown-menu mt-2" aria-labelledby="navbarDropdown">
+                            
+                            <li class="nav-item">
+                                <a class="nav-link active link-danger" aria-current="page" href="/history">ข้อมูลผู้ใช้งาน</a>
+                            </li><hr>
+                            <li class="nav-item">
+                                <a class="nav-link active link-danger" aria-current="page" href="{% url 'overviews' %}">สรุปผลการใช้งาน</a>
+                            </li>
+                    
+                        </ul>
+                    </li>
+                    <hr>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            สวัสดีคุณ : {{user.first_name}} 
+                        </a>
+                        <ul class="dropdown-menu mt-2" aria-labelledby="navbarDropdown">
+                            {% if request.user.is_staff %}
+                            <li class="nav-item">
+                                <a class="nav-link active link-danger" aria-current="page" href="/admin_user_details">ข้อมูลผู้ใช้งานระบบ</a>
+                            </li><hr>
+                            <li class="nav-item">
+                                <a class="nav-link active link-danger" aria-current="page" href="/overviews_admin">สรุปผลการใช้งานระบบ</a>
+                            </li><hr>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link active link-danger" aria-current="page" href="/logout">ออกจากระบบ</a>
+                            </li>
+                           
+                            {% else %}
+
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/login">เข้าสู่ระบบ</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+
+                    
+                </ul>
+                <!--<form class="d-flex" action="" >
+                    <input class="form-control me-2" type="search" placeholder="..." aria-label="Search" >
+                    <button class="btn btn-outline-success" type="submit" >ค้นหา</button>
+                    
+                </form>-->
+            </div>
+        </div>
+    </nav>
+   
+    <div id="banner" style="background-image: url('');">
+
+        {% block content %}
+
+
+        {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+
+        <footer class="bg-light text-center text-lg-start fixed-bottom">
+            <!-- Copyright -->
+            <div class="text-center " style="background-color: #FFF8DB;">
+                © 2023 Copyright: IT5
+            </div>
+            <!-- Copyright -->
+        </footer>
+
+        <script src="{% static 'vendor/chart.js/Chart.js' %}"></script>
+        <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="/static/script.js" ></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        
+<script type="text/javascript">
+$(document).ready(function () {
+    
+    $('#example').DataTable({
+        order: [[ 0, 'desc' ]],
+        language: {
+            lengthMenu: 'แสดง _MENU_ ลำดับ',
+            zeroRecords: 'ไม่มีผลลัพท์',
+            info: 'หน้าที่ _PAGE_ ถึง _PAGES_',
+            infoEmpty: 'ไม่มีข้อมูล',
+            infoFiltered: '(filtered from _MAX_ total records)',
+            search: "ค้นหา:",
+            paginate: {
+                first:      "หน้าแรก",
+                last:       "หน้าสุดท้าย",
+                next:       "ต่อไป",
+                previous:   "ก่อนหน้า"},
+            
+        },
+    });
+});
+
+</script>
+
+<!--Ajax Calls()
+
+<script>
+
+    jQuery(function ($) {
+        $(document).ajaxSend(function () {
+            $("#bg-spinner").fadeIn(500);
+        });
+
+        $('#btn2-in').click(function () {
+            $.ajax({
+                type: 'GET',
+                success: function (data) {
+                    var d = $.parseJSON(data);
+                    alert(d.Test);
+
+                }
+            }).done(function () {
+                setTimeout(function () {
+                    $("#bg-spinner").fadeOut(500);
+                }, 700);
+            });
+        });
+    });
+</script>
+-->
+</body>
+
+</html>
