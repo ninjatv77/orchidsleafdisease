@@ -16,16 +16,24 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import environ
+
+
+env = environ.Env()
+
+environ.Env.read_env()
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = 'django-insecure-k3xwv#w+fe)jqs)svgz)29(!6(-g4d@jt=89=xs+0l=x5l_2@%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['*']
 
 
 STATICFILES_DIRS= [
@@ -81,6 +89,8 @@ WSGI_APPLICATION = 'web_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+#Mysqldatabase
+'''
 
 DATABASES = {
     'default': {
@@ -91,6 +101,13 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT':''
     }
+}
+'''
+#render Postgres database
+import dj_database_url
+DATABASES = {
+    'default':dj_database_url.parse(env('DATABASE_URL'))
+
 }
 
 
